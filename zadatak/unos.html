@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Entry</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <img src="logo.png" alt="Logo" class="logo">
+                <div class="title-nav-container">
+                    <h1 class="title">Esports Sphere</h1>
+                    <nav>
+                        <ul class="nav-menu">
+                            <li><a href="index.php">Home</a></li>
+                            <li><a href="kategorija.php?kategorija=League of Legends">League of Legends</a></li>
+                            <li><a href="kategorija.php?kategorija=Counter Strike">Counter Strike</a></li>
+                            <li><a href="unos.html" class="active">Article entry</a></li>                       
+                            <li><a href="registracija.php">Register</a></li>  
+                            <li><a href="administrator.php">Admin</a></li> 
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <form action="skripta.php" method="POST" class="article-form" enctype="multipart/form-data" onsubmit="return validateForm()">
+            <div class="form-item">
+                <label for="title">Article Title:</label>
+                <div class="form-field">
+                    <input type="text" name="title" id="title" class="form-field-textual">
+                    <span id="errorTitle" class="error-message"></span>
+                </div>
+            </div>
+            <div class="form-item">
+                <label for="about">Short Summary:</label>
+                <div class="form-field">
+                    <textarea name="about" id="about" cols="30" rows="3" class="form-field-textual"></textarea>
+                    <span id="errorAbout" class="error-message"></span>
+                </div>
+            </div>
+            <div class="form-item">
+                <label for="content">Article Content:</label>
+                <div class="form-field">
+                    <textarea name="content" id="content" cols="30" rows="10" class="form-field-textual"></textarea>
+                    <span id="errorContent" class="error-message"></span>
+                </div>
+            </div>
+            <div class="form-item">
+                <label for="pphoto">Image:</label>
+                <div class="form-field">
+                    <input type="file" accept="image/jpg,image/jpeg,image/png,image/gif" id="pphoto" class="input-text" name="pphoto"/>
+                    <span id="errorPhoto" class="error-message"></span>
+                </div>
+            </div>
+            <div class="form-item">
+                <label for="category">Article Category:</label>
+                <div class="form-field">
+                    <select name="category" id="category" class="form-field-textual">
+                        <option value="">Select Category</option>
+                        <option value="League of Legends">League of Legends</option>
+                        <option value="Counter Strike">Counter Strike</option>          
+                    </select>
+                    <span id="errorCategory" class="error-message"></span>
+                </div>
+            </div>
+            <div class="form-item">
+                <label>
+                    Save in Archive:
+                    <div class="form-field">
+                        <input type="checkbox" name="archive" id="archive">
+                    </div>
+                </label>
+            </div>
+            <div class="form-item">
+                <button type="reset">Reset</button>
+                <button type="submit" id="gumb">Submit</button>
+            </div>
+        </form>
+        
+        <footer>
+            <p class="footer-text">Domagoj Papa | 2024 | dpapa@tvz.hr</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById("gumb").onclick = function(event) {
+            var slanje_forme = true;
+
+            resetErrors();
+
+            var title = document.getElementById('title').value.trim();
+            var errorTitle = document.getElementById('errorTitle');
+            if (title === '' || title.length < 5 || title.length > 30) {
+                slanje_forme = false;
+                errorTitle.innerHTML = (title === '') ? "Article title cannot be empty." : "Article title must be between 5 and 30 characters.";
+                errorTitle.style.color = "red";
+                document.getElementById('title').style.border = "1px solid red";
+            }
+
+            var about = document.getElementById('about').value.trim();
+            var errorAbout = document.getElementById('errorAbout');
+            if (about === '' || about.length < 10 || about.length > 100) {
+                slanje_forme = false;
+                errorAbout.innerHTML = (about === '') ? "Short summary cannot be empty." : "Short summary must be between 10 and 100 characters.";
+                errorAbout.style.color = "red";
+                document.getElementById('about').style.border = "1px solid red";
+            }
+
+            var content = document.getElementById('content').value.trim();
+            var errorContent = document.getElementById('errorContent');
+            if (content === '') {
+                slanje_forme = false;
+                errorContent.innerHTML = "Article content cannot be empty.";
+                errorContent.style.color = "red";
+                document.getElementById('content').style.border = "1px solid red";
+            }
+
+            var photo = document.getElementById('pphoto').value;
+            var errorPhoto = document.getElementById('errorPhoto');
+            if (photo === '') {
+                slanje_forme = false;
+                errorPhoto.innerHTML = "Please upload an image.";
+                errorPhoto.style.color = "red";
+                document.getElementById('pphoto').style.border = "1px solid red";
+            }
+
+            var category = document.getElementById('category').value;
+            var errorCategory = document.getElementById('errorCategory');
+            if (category === '') {
+                slanje_forme = false;
+                errorCategory.innerHTML = "Please select an article category.";
+                errorCategory.style.color = "red";
+                document.getElementById('category').style.border = "1px solid red";
+            }
+
+            if (!slanje_forme) {
+                event.preventDefault();
+            }
+        };
+
+        function resetErrors() {
+            var errorMessages = document.getElementsByClassName('error-message');
+            for (var i = 0; i < errorMessages.length; i++) {
+                errorMessages[i].innerHTML = '';
+            }
+
+            var formFields = document.getElementsByClassName('form-field-textual');
+            for (var j = 0; j < formFields.length; j++) {
+                formFields[j].style.border = "1px solid black";
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
